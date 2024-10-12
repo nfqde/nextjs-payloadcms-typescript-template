@@ -1,0 +1,69 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./",
+        "target": "ES2017",
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "incremental": true,
+        "strictPropertyInitialization": true,
+        "declaration": false,
+        "noImplicitAny": true,
+        "paths": {
+            "Application/*": ["./src/client/application/*"],
+            "Domain/*": ["./src/client/domain/*"],
+            "Shared/*": ["./src/client/shared/*"],
+            "Fonts/*": ["./src/client/ui/assets/fonts/*"],
+            "Images/*": ["./src/client/ui/assets/images/*"],
+            "UI/*": ["./src/client/ui/*"],
+            "ApiRoutes/*": ["./src/pages/api/*"],
+            "Controllers/*": ["./src/server/controllers/*"],
+            "Errors/*": ["./src/server/errors/*"],
+            "Payload/*": ["./src/server/payload/*"],
+            "ServerConfigs/*": ["./src/server/configs/*"],
+            "ServerDomain/*": ["./src/server/domain/*"],
+            "Middleware/*": ["./src/server/middleware/*"],
+            "Services/*": ["./src/server/services/*"],
+            "Utils/*": ["./src/server/utils/*"],
+            "Tests/*": ["./cypress/*"],
+            "@payload-config": ["./src/server/payload/payload.config.ts"],
+            "@app/features": ["./features.dev.js"]
+        },
+        "allowArbitraryExtensions": true,
+        "types": [
+            "node",
+            "cypress",
+            "cypress-real-events"
+        ],
+        "plugins": [{"name": "next"}]
+    },
+    "include": [
+        "next-env.d.ts",
+        "payload.config.ts",
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "types/**/*.ts",
+        "cypress.config.ts",
+        "cypress/support/index.d.ts",
+        "cypress/**/*.ts",
+        "cypress/**/*.tsx",
+        ".storybook/**/*.ts",
+        ".storybook/**/*.tsx",
+        "__previewjs__/**/*.tsx",
+        ".next/types/**/*.ts"
+    ],
+    "exclude": ["node_modules"]
+}

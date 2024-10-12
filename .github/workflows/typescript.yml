@@ -1,0 +1,42 @@
+name: Check Types
+
+on: [pull_request]
+
+jobs:
+  typescript:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Node.JS 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-${{ env.cache-name }}-
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+
+      - name: Set Tokens
+        run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM }} && npm config set @gsap:registry https://npm.greensock.com/ && npm config set //npm.greensock.com/:_authToken ${{ secrets.GSAP }}
+        env:
+          CI: TRUE
+
+      - name: Install Yarn
+        run: sudo npm -g i yarn
+        env:
+          CI: TRUE
+
+      - name: Install Node Dependencies
+        run: yarn --ignore-engines
+        env:
+          CI: TRUE
+
+      - name: Test Typescript types
+        run: yarn check:types

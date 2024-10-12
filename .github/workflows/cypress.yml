@@ -1,0 +1,43 @@
+name: Cypress
+
+on: [pull_request]
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Node.JS 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Set Tokens
+        run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM }} && npm config set @gsap:registry https://npm.greensock.com/ && npm config set //npm.greensock.com/:_authToken ${{ secrets.GSAP }}
+
+      - name: Install Yarn
+        run: sudo npm -g i yarn
+        env:
+          CI: TRUE
+
+      - name: Cypress.io
+        uses: cypress-io/github-action@v6
+        with:
+          install-command: yarn --frozen-lockfile --ignore-engines
+          config-file: cypress.config.ts
+          component: true
+          browser: electron
+          headed: false
+        env:
+          NODE_ENV: test
+
+      - name: Merge Cypress Reports
+        run: npx mochawesome-merge ./cypress/reports/mocha*.json > ./cypress/reports/index.json
+
+      - name: Cypress report action
+        uses: dmitry/cypress-report-action@v1
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          pathname: cypress/reports/index.json
