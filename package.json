@@ -1,6 +1,6 @@
 {
   "name": "nextjs-template",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "engines": {
     "node": ">=18.20.0"
   },
@@ -14,7 +14,7 @@
     "**/*.css"
   ],
   "template": {
-    "version": "1.0.1",
+    "version": "1.1.0",
     "name": "nextjs-payloadcms-typescript-template",
     "path": "https://github.com/nfqde/nextjs-payloadcms-typescript-template.git"
   },

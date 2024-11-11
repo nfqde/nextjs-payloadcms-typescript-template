@@ -1,10 +1,16 @@
 import React from 'react';
+
 import styled from 'styled-components';
 
 import {themeColors} from 'UI/utils/theme';
 
 import type {Meta, StoryObj} from '@storybook/react';
 
+/**
+ * A simple component that displays the theme colors.
+ *
+ * @returns The rendered component.
+ */
 const ColorGrid = () => {
     const baseNames = Object.keys(themeColors);
     const baseValues = Object.values(themeColors);
@@ -14,7 +20,8 @@ const ColorGrid = () => {
             <Headline>Theme Colors</Headline>
             <Grid>
                 {baseNames.map((name, index) => (
-                    <ColorDisplay key={index}>
+                    <ColorDisplay key={name}>
+                        {/* eslint-disable-next-line security/detect-object-injection */}
                         <Color $color={baseValues[index]} />
                         <Text>{name}</Text>
                     </ColorDisplay>
@@ -24,28 +31,21 @@ const ColorGrid = () => {
     );
 };
 
-const BG = styled.div`
-    background-color: ${({theme}) => theme.colors.pageBackground};
-    min-height: 100dvh;
-    width: 100%;
-    color: var(--primaryFontColor);
-`;
-
 const Grid = styled.div`
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    grid-gap: 2rem;
     align-items: stretch;
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     justify-items: center;
     padding: 1rem;
     width: 100%;
 `;
 
 const ColorDisplay = styled.div`
-    display: flex;
-    gap: 0.5rem;
-    flex-direction: column;
     align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     justify-content: space-between;
     width: 100%;
 `;
@@ -66,15 +66,10 @@ const Text = styled.span`
     font-size: 1.2rem;
 `;
 
-const meta: Meta<typeof ColorGrid> = {
-    component: ColorGrid,
-    title: 'Basics/Colors'
-};
+const meta = {component: ColorGrid} satisfies Meta<typeof ColorGrid>;
 
 export default meta;
 
-type Story = StoryObj<typeof ColorGrid>;
+type Story = StoryObj<typeof meta>;
 
-export const Colors: Story = {
-    parameters: {backgrounds: {default: 'None'}}
-};
+export const Colors: Story = {};

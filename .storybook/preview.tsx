@@ -2,13 +2,13 @@ import React, {useEffect} from 'react';
 import {ScreenSizeProvider} from '@nfq/react-grid';
 import {LazyMotion} from 'framer-motion';
 import {ThemeProvider} from 'styled-components';
-import {GlobalStyle, theme} from 'UI/utils/globalStyles';
+import {GlobalStyle, theme} from '../src/client/ui/utils/globalStyles';
 
 import type {Preview} from "@storybook/react";
 import type {FeatureBundle} from "framer-motion";
 
-import 'Fonts/fonts.css';
-import {BaseColors, DerivedColors, themes} from 'UI/utils/theme';
+import '../src/client/ui/assets/fonts/fonts.css';
+import {BaseColors, DerivedColors, themes} from '../src/client/ui/utils/theme';
 
 const options = new Set();
 
@@ -75,7 +75,7 @@ const preview: Preview = {
     parameters: {
         actions: { argTypesRegex: "^on[A-Z].*" },
         backgrounds: {
-            default: 'Light',
+            default: 'None',
             values: [
                 {
                     name: 'None',

@@ -1,13 +1,16 @@
 import type {StorybookConfig} from "@storybook/nextjs";
+import path from 'path';
+import {aliases, extensions} from '../withAliases';
 
 const config: StorybookConfig = {
-    stories: ["./stories/**/*.mdx", "./stories/**/*.stories.@(js|jsx|ts|tsx)"],
     addons: [
         "@storybook/addon-links",
         "@storybook/addon-essentials",
         "@nfq/storybook-github-issues"
     ],
-    staticDirs: ['../public'],
+    core: {
+        disableTelemetry: true, // 👈 Disables telemetry
+    },
     framework: {
         name: "@storybook/nextjs",
         options: {},
@@ -15,9 +18,8 @@ const config: StorybookConfig = {
     docs: {
         autodocs: "tag",
     },
-    core: {
-        disableTelemetry: true, // 👈 Disables telemetry
-    },
+    staticDirs: ['../public'],
+    stories: ["../src/client/ui/**/*.mdx", "../src/client/ui/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
     typescript: {
         reactDocgen: "react-docgen-typescript"
     },
@@ -29,7 +31,16 @@ const config: StorybookConfig = {
             config.resolve.fallback['stream'] = false;
             // @ts-expect-error
             config.resolve.fallback['zlib'] = false;
+
+            config.resolve.extensions = extensions;
         }
+
+        aliases.forEach(alias => {
+            if (config.resolve && config.resolve.alias) {
+                // @ts-expect-error
+                config.resolve.alias[alias.alias] = path.resolve(__dirname, alias.path);
+            }
+        });
 
         return config;
     }
