@@ -68,7 +68,7 @@ const aliases = [
     },
     {
         alias: '@payload-config',
-        path: './payload.config.ts'
+        path: './src/server/payload/payload.config.ts'
     }
 ];
 
