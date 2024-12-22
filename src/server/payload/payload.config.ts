@@ -25,7 +25,7 @@ export default buildConfig({
                 prefillOnly: false
             }
         } : {}),
-        importMap: {baseDir: resolve(dirname, '../../client/ui/components/admin')},
+        importMap: {baseDir: resolve(dirname, '../../client/payload')},
         livePreview: {
             breakpoints: [
                 {

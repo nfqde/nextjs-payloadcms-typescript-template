@@ -29,6 +29,7 @@
             "Fonts/*": ["./src/client/ui/assets/fonts/*"],
             "Images/*": ["./src/client/ui/assets/images/*"],
             "UI/*": ["./src/client/ui/*"],
+            "PayloadUI/*": ["./src/client/payload/*"],
             "ApiRoutes/*": ["./src/pages/api/*"],
             "Controllers/*": ["./src/server/controllers/*"],
             "Errors/*": ["./src/server/errors/*"],

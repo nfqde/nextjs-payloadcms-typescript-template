@@ -27,6 +27,10 @@ const aliases = [
         path: './src/client/ui/'
     },
     {
+        alias: 'PayloadUI',
+        path: './src/client/payload/'
+    },
+    {
         alias: 'ApiRoutes',
         path: './src/pages/api/'
     },
