@@ -4094,12 +4094,12 @@
   resolved "https://registry.yarnpkg.com/@stryker-mutator/util/-/util-8.7.1.tgz#1b6215f4238563f0d6f7ba3b70629f68439ea0f1"
   integrity sha512-Oj/sIHZI1GLfGOHKnud4Gw0ZRufm7ONoQYNnhcaAYEXTWraYVcV7mue/th8fZComTHvDPA8Ge8U16FvWYEb8dg==
 
-"@stylistic/eslint-plugin-ts@^4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@stylistic/eslint-plugin-ts/-/eslint-plugin-ts-4.2.0.tgz#8f5bd6673b735a51deb2a981d8c263830166b769"
-  integrity sha512-j2o2GvOx9v66x8hmp/HJ+0T+nOppiO5ycGsCkifh7JPGgjxEhpkGmIGx3RWsoxpWbad3VCX8e8/T8n3+7ze1Zg==
+"@stylistic/eslint-plugin-ts@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@stylistic/eslint-plugin-ts/-/eslint-plugin-ts-3.1.0.tgz#bb2622bdb307a258e041e04bbce8c398097d0dfa"
+  integrity sha512-ExsbaLmPTt3Y9bWN64nw+hpsnLAScLH25ncPxrV16FG2Lvg5wn6aRfMqldUGpu+YdqVmFFU1zehgFh6RIHT6YA==
   dependencies:
-    "@typescript-eslint/utils" "^8.23.0"
+    "@typescript-eslint/utils" "^8.13.0"
     eslint-visitor-keys "^4.2.0"
     espree "^10.3.0"
 
@@ -4707,7 +4707,7 @@
     semver "^7.6.0"
     ts-api-utils "^2.0.1"
 
-"@typescript-eslint/utils@8.26.0", "@typescript-eslint/utils@^8.23.0":
+"@typescript-eslint/utils@8.26.0", "@typescript-eslint/utils@^8.13.0":
   version "8.26.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-8.26.0.tgz#845d20ed8378a5594e6445f54e53b972aee7b3e6"
   integrity sha512-2L2tU3FVwhvU14LndnQCA2frYC8JnPDVKyQtWFPf8IYFMt/ykEN1bPolNhNbCVgOmdzTlWdusCTKA/9nKrf8Ig==
@@ -15512,6 +15512,13 @@ webpack@^5.98.0:
     watchpack "^2.4.1"
     webpack-sources "^3.2.3"
 
+webskit-gradient-parser@^1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/webskit-gradient-parser/-/webskit-gradient-parser-1.0.14.tgz#16e1a6c512a6cf8eb32bee31e1aeca0814741c07"
+  integrity sha512-fvgzqfrY7TmXE8yx4bs9BuWBvbyIPMs7Ek3QRj10YmtOlRHYWtEdfoYjv01MtmgVMOJBnilZOdqYXGH1OW87pQ==
+  dependencies:
+    yarn "^1.22.4"
+
 websocket-driver@>=0.5.1, websocket-driver@^0.7.4:
   version "0.7.4"
   resolved "https://registry.yarnpkg.com/websocket-driver/-/websocket-driver-0.7.4.tgz#89ad5295bbf64b480abcba31e4953aca706f5760"
@@ -15818,6 +15825,11 @@ yargs@^17.2.1, yargs@^17.7.2:
     string-width "^4.2.3"
     y18n "^5.0.5"
     yargs-parser "^21.1.1"
+
+yarn@^1.22.4:
+  version "1.22.22"
+  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.22.22.tgz#ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+  integrity sha512-prL3kGtyG7o9Z9Sv8IPfBNrWTDmXB4Qbes8A9rEzt6wkJV8mUvoirjU0Mp3GGAU06Y0XQyA3/2/RQFVuK7MTfg==
 
 yauzl@^2.10.0:
   version "2.10.0"

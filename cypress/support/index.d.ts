@@ -126,6 +126,28 @@ declare global {
              */
             // eslint-disable-next-line @typescript-eslint/unified-signatures
             (chainer: 'not.be.colored'): Chainable<Subject>;
+            /**
+             * Custom Chai assertion that checks if given subject has an specific gradient.
+             *
+             * @example
+             * ```
+             * expect('foo').to.be.gradient(color)
+             * cy.wrap('foo').should('have.css', 'background').and('be.gradient', color)
+             * ```
+             */
+            // eslint-disable-next-line @typescript-eslint/unified-signatures
+            (chainer: 'be.gradient'): Chainable<Subject>;
+            /**
+             * Custom Chai assertion that checks if given subject has an specific gradient.
+             *
+             * @example
+             * ```
+             * expect('foo').to.not.be.gradient(color)
+             * cy.wrap('foo').should('have.css', 'background').and('not.be.gradient', color)
+             * ```
+             */
+            // eslint-disable-next-line @typescript-eslint/unified-signatures
+            (chainer: 'not.be.gradient'): Chainable<Subject>;
         }
     }
 }
