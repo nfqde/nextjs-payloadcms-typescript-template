@@ -49,3 +49,5 @@ yarn-error.log*
 .horusec/
 # stryker temp files
 .stryker-tmp
+
+tsconfig.tsbuildinfo
