@@ -4,6 +4,8 @@ import {defineConfig} from 'cypress';
 
 import resetDB from './cypress/tasks/resetDB';
 import seedDB from './cypress/tasks/seedDB';
+import {addAliases} from './withAliases';
+import {addMocks} from './withMocks';
 
 const {combinedEnv} = loadEnvConfig(process.cwd());
 
@@ -11,7 +13,20 @@ export default defineConfig({
     component: {
         devServer: {
             bundler: 'webpack',
-            framework: 'next'
+            framework: 'next',
+            /**
+             * Sets up the webpack configuration.
+             *
+             * @returns The webpack configuration object.
+             */
+            webpackConfig() {
+                const config = {};
+
+                addAliases(config);
+                addMocks(config);
+
+                return config;
+            }
         },
         reporter: 'mochawesome',
         reporterOptions: {

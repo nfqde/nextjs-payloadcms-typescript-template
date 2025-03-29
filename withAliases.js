@@ -128,6 +128,30 @@ const withAliases = nextConfig => ({
 });
 
 /**
+ * Plugin for cors.
+ *
+ * @param {Parameters<NonNullable<import('@storybook/nextjs').StorybookConfig['webpackFinal']>>[0] | import('webpack').Configuration} config The next config.
+ *
+ * @returns {Parameters<NonNullable<import('@storybook/nextjs').StorybookConfig['webpackFinal']>>[0] | import('webpack').Configuration} The next config.
+ */
+const addAliases = config => {
+    if (!config.resolve) {
+        config.resolve = {};
+    }
+    if (!config.resolve.alias) {
+        config.resolve.alias = {};
+    }
+
+    aliases.forEach(alias => {
+        config.resolve.alias[alias.alias] = path.resolve(__dirname, alias.path);
+    });
+
+    config.resolve.extensions = extensions;
+
+    return config;
+};
+
+/**
  * Generates aliases for eslint.
  *
  * @returns {any} Alias object.
@@ -140,6 +164,7 @@ const withAliasesEslint = () => ({
 });
 
 module.exports = {
+    addAliases,
     aliases,
     extensions,
     withAliases,

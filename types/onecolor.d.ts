@@ -1,8 +1,8 @@
 declare module 'onecolor' {
     interface ColorObject {
-        equals(colorObj: ColorObject): boolean;
+        equals(colorObj: ColorObject | false): boolean;
         hex(): string;
     }
 
-    export default function color(colorString: string): ColorObject;
+    export default function color(colorString: string): ColorObject | false;
 }

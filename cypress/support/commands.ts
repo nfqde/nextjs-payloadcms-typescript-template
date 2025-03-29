@@ -1,5 +1,4 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle, no-undef, security/detect-object-injection */
 import 'cypress/react';
 import type {ReactElement, ReactNode} from 'react';
 
@@ -273,6 +272,7 @@ const ColorsEqual = (chai: Chai.ChaiStatic) => {
             const colorVar = colorString.replace('var(', '').replace(')', '');
 
             cy.document().then(doc => {
+                // eslint-disable-next-line react-hooks-ssr/react-hooks-global-ssr
                 const trueColor = window.getComputedStyle(doc.body).getPropertyValue(colorVar).trim();
                 const expected = color(trueColor);
 
@@ -281,6 +281,7 @@ const ColorsEqual = (chai: Chai.ChaiStatic) => {
                     'expected #{act} to be the same color as #{exp}',
                     'expected #{act} to be a different color than #{exp}',
                     expected ? expected.hex() : undefined,
+                    // eslint-disable-next-line promise/always-return
                     actual ? actual.hex() : undefined
                 );
             });
@@ -335,9 +336,11 @@ const GradientsEqual = (chai: Chai.ChaiStatic) => {
     function assertGradient(this: Chai.AssertionStatic, expectedColors: string[]) {
         const gradientStops = (JSON.parse(gradient.parse(this._obj as string)) as GradientObject).stops;
 
+        // eslint-disable-next-line react-hooks-ssr/react-hooks-global-ssr
         cy.document().then(doc => {
             const compareArray = [];
 
+            // eslint-disable-next-line promise/always-return
             for (let i = 0; i < gradientStops.length; i++) {
                 const actual = color(gradientStops[i][0]);
 

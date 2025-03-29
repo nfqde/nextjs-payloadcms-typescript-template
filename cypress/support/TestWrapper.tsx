@@ -12,9 +12,18 @@ import type {FeatureBundle} from 'framer-motion';
 import 'Fonts/fonts';
 
 /**
- * Loads the framer-motion features.
+ * Dynamically loads the Framer Motion features bundle used for animations.
+ * This function uses code-splitting via Webpack's `import()` to lazily load motion features when needed,
+ * optimizing initial bundle size and performance.
+ * The `motionFeatures` module is expected to export a `default` value that conforms to `FeatureBundle`,
+ * which is returned and consumed by animation providers like `LazyMotion`.
  *
- * @returns The framer-motion feature bundle.
+ * @returns A promise that resolves to a `FeatureBundle` containing Framer Motion animation features.
+ *
+ * @example
+ * ```tsx
+ * const features = await loadMotionFeatures();
+ * ```
  */
 const loadMotionFeatures = async (): Promise<FeatureBundle> => {
     const module = await import(
@@ -25,33 +34,78 @@ const loadMotionFeatures = async (): Promise<FeatureBundle> => {
     return module.default;
 };
 
-
+/**
+ * Props for the `TestWrapper` component.
+ * These properties control the layout, styling, and testing behavior of the wrapper element.
+ */
 interface ComponentProps {
-    /** The background color. */
-    bgColor: string;
-    /** The height. */
-    height: number | string;
-    /** The padding. */
-    padding: string;
-    /** The test id. */
-    testId: string;
-    /** The width. */
-    width: number | string;
+    /**
+     * Optional background color for the wrapper container.
+     * Can be any valid CSS color string (e.g., `'white'`, `'#f0f0f0'`, `'rgba(0,0,0,0.1)'`).
+     *
+     * @default 'transparent'
+     */
+    bgColor?: string;
+    /**
+     * Optional height for the wrapper container.
+     * Accepts numeric pixel values or string-based CSS units (e.g., `'100%'`, `'50vh'`, `300`).
+     *
+     * @default '100%'
+     */
+    height?: number | string;
+    /**
+     * Optional padding inside the wrapper container.
+     * Accepts any valid CSS padding value (e.g., `'1rem'`, `'20px 10px'`, `'0'`).
+     *
+     * @default '0'
+     */
+    padding?: string;
+    /**
+     * The `testId` property represents a unique identifier used for test automation.
+     * It is rendered as a `data-cy` attribute on the wrapper and used to target the component in Cypress or similar tools.
+     *
+     * @default 'TestWrapper'
+     */
+    testId?: string;
+    /**
+     * Optional width for the wrapper container.
+     * Accepts numeric pixel values or string-based CSS units (e.g., `'100%'`, `'80vw'`, `400`).
+     *
+     * @default '100%'
+     */
+    width?: number | string;
 }
 
 /**
- * TestWrapper.
+ * The `TestWrapper` component.
+ * This wrapper component is used for rendering children inside a controlled layout with optional styles,
+ * test identifiers, and shared providers like `ThemeProvider`, `ScreenSizeProvider`, and animation context (`LazyMotion`).
+ * It is useful for visual testing, layout isolation, or previewing components with full context setup.
  *
- * @param props          Component props.
- * @param props.testId   The test id.
- * @param props.bgColor  The background color.
- * @param props.children The children.
- * @param props.height   The height.
- * @param props.padding  The padding.
- * @param props.width    The width.
- * @returns The component.
+ * @param props          The component props.
+ * @param props.bgColor  Background color of the wrapper container. Defaults to `'transparent'`.
+ * @param props.children React children to be rendered inside the wrapper.
+ * @param props.height   Height of the wrapper container. Defaults to `'100%'`.
+ * @param props.padding  Padding inside the wrapper container. Defaults to `'0'`.
+ * @param props.testId   A unique identifier used as `data-cy` for test automation. Defaults to `'TestWrapper'`.
+ * @param props.width    Width of the wrapper container. Defaults to `'100%'`.
+ * @returns A React element representing the `TestWrapper` component.
+ *
+ * @example
+ * ```tsx
+ * <TestWrapper testId="my-wrapper" bgColor="#f9f9f9" padding="2rem">
+ *   <MyComponent />
+ * </TestWrapper>
+ * ```
  */
-const TestWrapper = ({bgColor, children, height, padding, testId, width}: WithChildren<ComponentProps>) => (
+const TestWrapper = ({
+    bgColor = 'transparent',
+    children,
+    height = '100%',
+    padding = '0',
+    testId = 'TestWrapper',
+    width = '100%'
+}: WithChildren<ComponentProps>) => (
     <TestWrapperElement bgColor={bgColor} data-cy={testId} height={height} padding={padding} width={width}>
         <ThemeProvider theme={theme}>
             <GlobalStyle />
@@ -65,24 +119,13 @@ const TestWrapper = ({bgColor, children, height, padding, testId, width}: WithCh
 );
 
 TestWrapper.displayName = 'TestWrapper';
-TestWrapper.defaultProps = {
-    bgColor: 'transparent',
-    height: '100%',
-    padding: '0',
-    testId: 'TestWrapper',
-    width: '100%'
-};
 
 export default TestWrapper;
 
 interface TestWrapperElementProps {
-    /** The background color. */
     bgColor: string;
-    /** The height. */
     height: number | string;
-    /** The padding. */
     padding: string;
-    /** The width. */
     width: number | string;
 }
 

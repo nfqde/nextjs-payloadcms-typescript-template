@@ -1,6 +1,6 @@
 import type {StorybookConfig} from "@storybook/nextjs";
-import path from 'path';
-import {aliases, extensions} from '../withAliases';
+import {addAliases} from '../withAliases';
+import {addMocks} from '../withMocks';
 
 const config: StorybookConfig = {
     addons: [
@@ -31,16 +31,10 @@ const config: StorybookConfig = {
             config.resolve.fallback['stream'] = false;
             // @ts-expect-error
             config.resolve.fallback['zlib'] = false;
-
-            config.resolve.extensions = extensions;
         }
 
-        aliases.forEach(alias => {
-            if (config.resolve && config.resolve.alias) {
-                // @ts-expect-error
-                config.resolve.alias[alias.alias] = path.resolve(__dirname, alias.path);
-            }
-        });
+        addAliases(config);
+        addMocks(config);
 
         return config;
     }
