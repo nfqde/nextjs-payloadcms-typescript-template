@@ -1,10 +1,8 @@
+import {css, type Theme} from '@emotion/react';
 import {configureFonts, getFontThemeList} from '@nfq/next-fonts';
-import {createGlobalStyle} from 'styled-components';
+import {createConfig} from '@nfq/react-grid';
 
 import {globalCss, shadows, themeColors} from 'UI/utils/theme';
-
-import type {Config} from '@nfq/react-grid';
-import type {DefaultTheme} from 'styled-components';
 
 export const fontDefinitions = configureFonts({
     Lato: [
@@ -25,7 +23,8 @@ export const fontDefinitions = configureFonts({
     ]
 });
 
-const nfqgrid: Config = {
+export const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
+export const {configType, globalCss: globalGridCss} = createConfig(breakpoints, {
     baseSpacing: 0.4,
     container: {
         lg: 'fluid',
@@ -35,16 +34,19 @@ const nfqgrid: Config = {
         xs: 'fluid',
         xxl: 1140
     }
-};
+});
 
-export const theme: DefaultTheme = {
+export const theme: Theme = {
     boxShadows: shadows,
     colors: themeColors,
-    fonts: getFontThemeList(fontDefinitions),
-    nfqgrid
+    fonts: getFontThemeList(fontDefinitions)
 };
 
-export const GlobalStyle = createGlobalStyle`
+export const globals = css`
+    ${globalCss}
+
+    ${globalGridCss}
+
     *,
     &::before,
     &::after {
@@ -60,15 +62,13 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     html, body {
-        background-color: ${({theme: globalTheme}) => globalTheme.colors.pageBackground};
-        color: ${({theme: globalTheme}) => globalTheme.colors.primaryFontColor};
+        background-color: ${themeColors.pageBackground};
+        color: ${themeColors.primaryFontColor};
         margin: 0;
         min-height: 100%;
         padding: 0;
         scroll-behavior: smooth;
     }
-
-    ${globalCss}
 
     #__next {
         min-height: 100%;

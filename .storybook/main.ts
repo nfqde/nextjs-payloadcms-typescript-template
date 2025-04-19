@@ -25,11 +25,8 @@ const config: StorybookConfig = {
     },
     webpackFinal: async (config) => {
         if (config.resolve && config.resolve.fallback) {
-            // @ts-expect-error
             config.resolve.fallback['fs'] = false;
-            // @ts-expect-error
             config.resolve.fallback['stream'] = false;
-            // @ts-expect-error
             config.resolve.fallback['zlib'] = false;
         }
 

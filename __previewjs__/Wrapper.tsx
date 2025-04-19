@@ -1,19 +1,18 @@
+import {Global, ThemeProvider} from '@emotion/react';
 import {ScreenSizeProvider} from '@nfq/react-grid';
-import {LazyMotion} from 'framer-motion';
-import {ThemeProvider} from 'styled-components';
+import {LazyMotion} from 'motion/react';
 
-import {GlobalStyle, theme} from '../src/client/ui/utils/globalStyles';
+import {globals, theme} from '../src/client/ui/utils/globalStyles';
 
-import type {FeatureBundle} from 'framer-motion';
+import type {FeatureBundle} from 'motion/react';
 import type {WithChildren} from 'types/global';
 
 import '../src/client/ui/assets/fonts/fonts';
 
-
 /**
- * Loads the framer-motion features.
+ * Loads the motion features.
  *
- * @returns The framer-motion feature bundle.
+ * @returns The motion feature bundle.
  */
 const loadMotionFeatures = async (): Promise<FeatureBundle> => {
     const module = await import(
@@ -33,7 +32,7 @@ const loadMotionFeatures = async (): Promise<FeatureBundle> => {
  */
 export const Wrapper = ({children}: WithChildren) => (
     <ThemeProvider theme={theme}>
-        <GlobalStyle />
+        <Global styles={globals} />
         <ScreenSizeProvider>
             <LazyMotion features={loadMotionFeatures} strict>
                 {children}

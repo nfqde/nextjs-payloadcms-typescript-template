@@ -16,22 +16,26 @@ const withCors = require('./withCors');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = phase => ({
-    compiler: {styledComponents: true},
+    compiler: {emotion: {autoLabel: 'never'}},
     eslint: {ignoreDuringBuilds: true},
     experimental: {
-        swcPlugins: [[
-            '@nfq/feature-flags', {
-                featureEnv: process.env.FEATURE_ENV || 'stage',
-                featureFlags: {
-                    dev: devFeatures,
-                    live: liveFeatures,
-                    stage: stageFeatures,
-                    test: testFeatures
+        swcPlugins: [
+            [
+                '@nfq/feature-flags', {
+                    featureEnv: process.env.FEATURE_ENV || 'stage',
+                    featureFlags: {
+                        dev: devFeatures,
+                        live: liveFeatures,
+                        stage: stageFeatures,
+                        test: testFeatures
+                    }
                 }
-            }
-        ]]
+            ],
+            ...(process.env.NODE_ENV === 'test' ? [['swc-plugin-coverage-instrument', {}]] : [])
+        ]
     },
     output: 'standalone',
+    productionBrowserSourceMaps: true,
     reactStrictMode: true,
     /**
      * The headers to send.

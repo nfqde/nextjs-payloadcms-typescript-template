@@ -3,7 +3,6 @@ import {connectable, HTTP_METHODS, HTTP_STATUS, TypedRoute} from '@nfq/typed-nex
 
 import nextConnect from 'Utils/nextConnect';
 
-
 /**
  * Coverage endpoint.
  *

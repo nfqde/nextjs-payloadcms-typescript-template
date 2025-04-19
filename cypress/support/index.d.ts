@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 /// <reference types="cypress" />
 
+import type {ColorChainers} from '@nfq/colors/cypress';
 import './commands';
 
 type Fn<I, O> = (...input: I) => O;
@@ -38,7 +39,7 @@ declare global {
                 }>;
         }
 
-        interface Chainer<Subject> {
+        interface Chainer<Subject> extends ColorChainers<Subject> {
             /**
              * Custom Chai assertion that checks if given subject is an specific HTML element.
              *
@@ -60,94 +61,6 @@ declare global {
              */
             // eslint-disable-next-line @typescript-eslint/unified-signatures
             (chainer: 'not.be.an.htmlElement', value: string): Chainable<Subject>;
-            /**
-             * Custom Chai assertion that checks if given subject is an specific HTML element.
-             *
-             * @example
-             * ```
-             * expect('foo').to.be.dark
-             * cy.wrap('foo').should('be.dark')
-             * ```
-             */
-            // eslint-disable-next-line @typescript-eslint/unified-signatures
-            (chainer: 'be.dark'): Chainable<Subject>;
-            /**
-             * Custom Chai assertion that checks if given subject is an specific HTML element.
-             *
-             * @example
-             * ```
-             * expect('foo').to.not.be.dark
-             * cy.wrap('foo').should('not.be.dark')
-             * ```
-             */
-            // eslint-disable-next-line @typescript-eslint/unified-signatures
-            (chainer: 'not.be.dark'): Chainable<Subject>;
-            /**
-             * Custom Chai assertion that checks if given subject is an specific HTML element.
-             *
-             * @example
-             * ```
-             * expect('foo').to.be.darker
-             * cy.wrap('foo').should('be.darker')
-             * ```
-             */
-            // eslint-disable-next-line @typescript-eslint/unified-signatures
-            (chainer: 'be.darker'): Chainable<Subject>;
-            /**
-             * Custom Chai assertion that checks if given subject is an specific HTML element.
-             *
-             * @example
-             * ```
-             * expect('foo').to.not.be.darker
-             * cy.wrap('foo').should('not.be.darker')
-             * ```
-             */
-            // eslint-disable-next-line @typescript-eslint/unified-signatures
-            (chainer: 'not.be.darker'): Chainable<Subject>;
-            /**
-             * Custom Chai assertion that checks if given subject is an specific color.
-             *
-             * @example
-             * ```
-             * expect('foo').to.be.colored(color)
-             * cy.wrap('foo').should('have.css', 'background-color').and('be.colored', color)
-             * ```
-             */
-            // eslint-disable-next-line @typescript-eslint/unified-signatures
-            (chainer: 'be.colored'): Chainable<Subject>;
-            /**
-             * Custom Chai assertion that checks if given subject is an specific color.
-             *
-             * @example
-             * ```
-             * expect('foo').to.not.be.colored(color)
-             * cy.wrap('foo').should('have.css', 'background-color').and('not.be.colored', color)
-             * ```
-             */
-            // eslint-disable-next-line @typescript-eslint/unified-signatures
-            (chainer: 'not.be.colored'): Chainable<Subject>;
-            /**
-             * Custom Chai assertion that checks if given subject has an specific gradient.
-             *
-             * @example
-             * ```
-             * expect('foo').to.be.gradient(color)
-             * cy.wrap('foo').should('have.css', 'background').and('be.gradient', color)
-             * ```
-             */
-            // eslint-disable-next-line @typescript-eslint/unified-signatures
-            (chainer: 'be.gradient'): Chainable<Subject>;
-            /**
-             * Custom Chai assertion that checks if given subject has an specific gradient.
-             *
-             * @example
-             * ```
-             * expect('foo').to.not.be.gradient(color)
-             * cy.wrap('foo').should('have.css', 'background').and('not.be.gradient', color)
-             * ```
-             */
-            // eslint-disable-next-line @typescript-eslint/unified-signatures
-            (chainer: 'not.be.gradient'): Chainable<Subject>;
         }
     }
 }

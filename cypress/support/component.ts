@@ -20,6 +20,7 @@ import '@cypress/code-coverage/support';
 import 'cypress-real-events';
 // Import commands.js using ES2015 syntax:
 import './commands';
+import '@nfq/colors/cypress';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

@@ -1,19 +1,22 @@
 /* eslint-disable react/jsx-filename-extension */
 import type {ReactNode} from 'react';
-import React, {Component} from 'react';
+import {Component} from 'react';
 
+import {CacheProvider, Global, ThemeProvider} from '@emotion/react';
+import styled from '@emotion/styled';
 import {preloadFonts} from '@nfq/next-fonts';
-import {ScreenSizeProvider} from '@nfq/react-grid';
-import {AnimatePresence, LazyMotion, m as motion} from 'framer-motion';
+import {ScreenBadge, ScreenSizeProvider} from '@nfq/react-grid';
+import {AnimatePresence, LazyMotion} from 'motion/react';
+import * as motion from 'motion/react-m';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import styled, {ThemeProvider} from 'styled-components';
 
 import {LayoutTransition} from 'UI/animations/layout';
 
-import {fontDefinitions, GlobalStyle, theme} from 'UI/utils/globalStyles';
+import {cache} from 'Application/configs/emotionCache';
+import {fontDefinitions, globals, theme} from 'UI/utils/globalStyles';
 
-import type {FeatureBundle} from 'framer-motion';
+import type {FeatureBundle} from 'motion/react';
 import type {AppProps} from 'types/global';
 
 import 'Fonts/fonts';
@@ -114,30 +117,33 @@ class App extends Component<AppProps<object>> {
      */
     render(): ReactNode {
         return (
-            <ThemeProvider theme={theme}>
-                <Head>
-                    <meta content="initial-scale=1.0, width=device-width" name="viewport" />
-                    <link href="/favicon.ico" rel="icon" type="image/x-icon" />
-                    {preloadFonts(fontDefinitions)}
-                </Head>
-                <GlobalStyle />
-                <AxeCoreHelper />
-                <ScreenSizeProvider>
-                    <LazyMotion features={loadMotionFeatures} strict>
-                        <AnimatePresence initial={false} mode="wait">
-                            <AnimationWrapper
-                                key={this.getLayoutKey()}
-                                animate="enter"
-                                exit="exit"
-                                initial="initial"
-                                variants={LayoutTransition}
-                            >
-                                {this.chooseLayout()}
-                            </AnimationWrapper>
-                        </AnimatePresence>
-                    </LazyMotion>
-                </ScreenSizeProvider>
-            </ThemeProvider>
+            <CacheProvider value={cache}>
+                <ThemeProvider theme={theme}>
+                    <Head>
+                        <meta content="initial-scale=1.0, width=device-width" name="viewport" />
+                        <link href="/favicon.ico" rel="icon" type="image/x-icon" />
+                        {preloadFonts(fontDefinitions)}
+                    </Head>
+                    <Global styles={globals} />
+                    <AxeCoreHelper />
+                    <ScreenSizeProvider>
+                        <LazyMotion features={loadMotionFeatures} strict>
+                            <AnimatePresence initial={false} mode="wait">
+                                <AnimationWrapper
+                                    key={this.getLayoutKey()}
+                                    animate="enter"
+                                    exit="exit"
+                                    initial="initial"
+                                    variants={LayoutTransition}
+                                >
+                                    {this.chooseLayout()}
+                                </AnimationWrapper>
+                            </AnimatePresence>
+                        </LazyMotion>
+                        <ScreenBadge />
+                    </ScreenSizeProvider>
+                </ThemeProvider>
+            </CacheProvider>
         );
     }
 }

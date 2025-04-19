@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import {ScreenSizeProvider} from '@nfq/react-grid';
-import {LazyMotion} from 'framer-motion';
-import {ThemeProvider} from 'styled-components';
-import {GlobalStyle, theme} from '../src/client/ui/utils/globalStyles';
+import {LazyMotion} from 'motion/react';
+import {Global, ThemeProvider} from '@emotion/react';
+import {globals, theme} from '../src/client/ui/utils/globalStyles';
 
-import type {Preview} from "@storybook/react";
-import type {FeatureBundle} from "framer-motion";
+import type {Preview} from '@storybook/react';
+import type {FeatureBundle} from 'motion/react';
 
 import '../src/client/ui/assets/fonts/fonts.css';
 import {BaseColors, DerivedColors, themes} from '../src/client/ui/utils/theme';
@@ -20,9 +20,9 @@ if (typeof Object.values(DerivedColors)[0] === 'object' && !Array.isArray(Object
 }
 
 /**
- * Loads the framer-motion features.
+ * Loads the motion features.
  *
- * @returns The framer-motion feature bundle.
+ * @returns The motion feature bundle.
  */
 const loadMotionFeatures = async (): Promise<FeatureBundle> => {
     const module = await import(
@@ -50,7 +50,7 @@ const preview: Preview = {
 
             return (
                 <ThemeProvider theme={theme}>
-                    <GlobalStyle />
+                    <Global styles={globals} />
                     <ScreenSizeProvider>
                         <LazyMotion features={loadMotionFeatures} strict>
                             <Story />

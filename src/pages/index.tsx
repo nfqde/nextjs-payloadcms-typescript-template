@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import styled from '@emotion/styled';
 import {Container} from '@nfq/react-grid';
 
 import type {GetStaticProps} from 'next';
@@ -11,8 +12,8 @@ import type {NextSSGPageWithLayout} from 'types/global';
  * @returns A ReactNode representing the `Home` page.
  */
 const Home: NextSSGPageWithLayout<typeof getStaticProps> = () => (
-    <Container as="section" isFluid>
-        Homepage
+    <Container as="main">
+        <P>Homepage</P>
     </Container>
 );
 
@@ -31,9 +32,7 @@ const Home: NextSSGPageWithLayout<typeof getStaticProps> = () => (
  * const LayoutWrappedComponent = Home.getLayout(router, pageProps, PageComponent);
  * ```
  */
-Home.getLayout = (router, pageProps, PageComponent) => (
-    <PageComponent router={router} {...pageProps} />
-);
+Home.getLayout = (router, pageProps, PageComponent) => <PageComponent router={router} {...pageProps} />;
 
 /**
  * `getLayoutKey` is a static property of the `Home` component that is a function designed to return the layout key string.
@@ -50,6 +49,10 @@ Home.getLayout = (router, pageProps, PageComponent) => (
 Home.getLayoutKey = () => '';
 
 export default Home;
+
+const P = styled.p`
+    font-family: ${({theme}) => theme.fonts.Lato};
+`;
 
 /**
  * `getStaticProps` is a Next.js function designed to fetch data at build time and pass it as props to the page.

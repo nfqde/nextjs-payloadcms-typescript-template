@@ -1,13 +1,14 @@
 import React from 'react';
 
+import {Global, ThemeProvider} from '@emotion/react';
+import styled from '@emotion/styled';
 import {ScreenSizeProvider} from '@nfq/react-grid';
-import {LazyMotion} from 'framer-motion';
-import styled, {ThemeProvider} from 'styled-components';
+import {LazyMotion} from 'motion/react';
 
 import {GlobalStyle, theme} from 'UI/utils/globalStyles';
 
 import type {WithChildren} from '../../types/global';
-import type {FeatureBundle} from 'framer-motion';
+import type {FeatureBundle} from 'motion/react';
 
 import 'Fonts/fonts';
 
@@ -108,7 +109,7 @@ const TestWrapper = ({
 }: WithChildren<ComponentProps>) => (
     <TestWrapperElement bgColor={bgColor} data-cy={testId} height={height} padding={padding} width={width}>
         <ThemeProvider theme={theme}>
-            <GlobalStyle />
+            <Global styles={globals} />
             <ScreenSizeProvider>
                 <LazyMotion features={loadMotionFeatures} strict>
                     {children}

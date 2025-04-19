@@ -18,10 +18,10 @@ const DEFAULT_TIMEOUT = 100;
  */
 export const useDebounce = (func: (...args: any[]) => void, timeout = DEFAULT_TIMEOUT) => {
     // eslint-disable-next-line no-undef
-    const timer = useRef<NodeJS.Timeout>(setTimeout(() => {}, 0));
+    const timer = useRef<NodeJS.Timeout>(null);
 
     return useCallback((...args: unknown[]) => {
-        clearTimeout(timer.current);
+        clearTimeout(timer.current!);
         timer.current = setTimeout(() => func(...args), timeout);
     }, [func, timeout]);
 };
