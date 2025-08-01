@@ -118,7 +118,7 @@ module.exports = phase => withBundleAnalyzer(
     withFeatureFlags(
         withAliases(
             withCors(
-                withPayload(nextConfig(phase)),
+                withPayload(nextConfig(phase), {devBundleServerPackages: false}),
                 {phase}
             )
         ),
