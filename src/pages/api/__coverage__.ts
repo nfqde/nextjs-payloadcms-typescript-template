@@ -1,6 +1,7 @@
 import {COVERAGE} from '@app/features';
 import {connectable, HTTP_METHODS, HTTP_STATUS, TypedRoute} from '@nfq/typed-next-api';
 
+import {errorHandler} from 'Utils/errorHandler';
 import nextConnect from 'Utils/nextConnect';
 
 /**
@@ -22,4 +23,5 @@ const getCoverage = TypedRoute(HTTP_METHODS.GET, async () => {
 });
 
 export default nextConnect()
-    .get(connectable(getCoverage));
+    .get(connectable(getCoverage))
+    .handler({onError: errorHandler});
