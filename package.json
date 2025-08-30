@@ -67,7 +67,7 @@
     "mobx": "^6.13.7",
     "mobx-react-lite": "^4.1.0",
     "motion": "^12.12.1",
-    "next": "15.3.2",
+    "next": "15.4.7",
     "next-connect": "^1.0.0",
     "patch-package": "^8.0.0",
     "payload": "^3.39.0",
