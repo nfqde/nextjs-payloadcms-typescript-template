@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import {themeColors} from 'UI/utils/theme';
 
-import type {Meta, StoryObj} from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/nextjs-vite';
 
 /**
  * A simple component that displays the theme colors.

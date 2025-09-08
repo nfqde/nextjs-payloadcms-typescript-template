@@ -1,6 +1,6 @@
 import {DeleteAfterIconsAdded} from './DeleteAfterIconsAdded';
 
-import type {Meta, StoryObj} from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/nextjs-vite';
 
 const meta = {
     args: {

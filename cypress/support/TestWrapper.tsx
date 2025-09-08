@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import {ScreenSizeProvider} from '@nfq/react-grid';
 import {LazyMotion} from 'motion/react';
 
-import {GlobalStyle, theme} from 'UI/utils/globalStyles';
+import {globals, theme} from 'UI/utils/globalStyles';
 
 import type {WithChildren} from '../../types/global';
 import type {FeatureBundle} from 'motion/react';

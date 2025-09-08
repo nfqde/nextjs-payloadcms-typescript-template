@@ -47,6 +47,7 @@
   "dependencies": {
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
+    "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.14.1",
     "@nfq/autobind": "^1.1.4",
     "@nfq/colors": "^3.0.2",
@@ -62,10 +63,12 @@
     "@payloadcms/richtext-slate": "3.54.0",
     "@payloadcms/translations": "3.54.0",
     "@payloadcms/ui": "3.54.0",
+    "@storybook/nextjs-vite": "^9.1.5",
     "graphql": "^16.11.0",
     "mobx": "^6.13.7",
     "mobx-react-lite": "^4.1.0",
     "motion": "^12.23.12",
+    "msw-storybook-addon": "^2.0.5",
     "next": "15.5.2",
     "next-connect": "^1.0.0",
     "patch-package": "^8.0.0",
@@ -75,6 +78,7 @@
     "react-dom": "19.1.1",
     "sharp": "^0.34.3",
     "styled-components": "^6.1.19",
+    "swc-plugin-coverage-instrument": "^0.0.28",
     "swr": "^2.3.6"
   },
   "devDependencies": {
@@ -98,7 +102,6 @@
     "@storybook/addon-essentials": "^8.6.14",
     "@storybook/addon-links": "^9.1.5",
     "@storybook/blocks": "^8.6.14",
-    "@storybook/nextjs": "^9.1.5",
     "@storybook/react": "^9.1.5",
     "@storybook/testing-library": "^0.2.2",
     "@stryker-mutator/core": "^9.1.1",

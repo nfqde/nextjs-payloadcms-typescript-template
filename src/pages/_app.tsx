@@ -13,9 +13,10 @@ import Head from 'next/head';
 
 import {LayoutTransition} from 'UI/animations/layout';
 
-import {cache} from 'Application/configs/emotionCache';
+import {createEmotionCache} from 'Application/configs/emotionCache';
 import {fontDefinitions, globals, theme} from 'UI/utils/globalStyles';
 
+import type {EmotionCache} from '@emotion/react';
 import type {FeatureBundle} from 'motion/react';
 import type {AppProps} from 'types/global';
 
@@ -61,12 +62,14 @@ const loadMotionFeatures = async (): Promise<FeatureBundle> => {
     return module.default;
 };
 
+const clientSideEmotionCache = createEmotionCache();
+
 /**
  * The `App` class extends the `Component` class and serves as the main application component.
  * It is responsible for rendering the overall layout and structure of the application, including theming, global styles, and various providers.
  * This class is crucial for managing the overall appearance and behavior of the application and for wrapping the application with necessary context providers.
  */
-class App extends Component<AppProps<object>> {
+class App extends Component<AppProps<object> & {emotionCache?: EmotionCache}> {
     /**
      * `getLayoutKey` is a method designed to retrieve the layout key from the PageComponent.
      * It is responsible for determining which layout should be used when rendering the application.
@@ -116,8 +119,10 @@ class App extends Component<AppProps<object>> {
      * @returns A ReactNode representing the overall structure and elements of the application.
      */
     render(): ReactNode {
+        const {emotionCache = clientSideEmotionCache} = this.props;
+
         return (
-            <CacheProvider value={cache}>
+            <CacheProvider value={emotionCache}>
                 <ThemeProvider theme={theme}>
                     <Head>
                         <meta content="initial-scale=1.0, width=device-width" name="viewport" />

@@ -1,14 +1,18 @@
 import React, {useEffect} from 'react';
 import {ScreenSizeProvider} from '@nfq/react-grid';
-import {LazyMotion} from 'motion/react';
-import {Global, ThemeProvider} from '@emotion/react';
+import {AnimatePresence, LazyMotion} from 'motion/react';
+import {CacheProvider, Global, ThemeProvider} from '@emotion/react';
+import * as motion from 'motion/react-m';
 import {globals, theme} from '../src/client/ui/utils/globalStyles';
+import {LayoutTransition} from '../src/client/ui/animations/layout';
 
-import type {Preview} from '@storybook/react';
+import type {Preview} from '@storybook/nextjs-vite';
 import type {FeatureBundle} from 'motion/react';
+import {createEmotionCache} from '../src/client/application/configs/emotionCache';
 
 import '../src/client/ui/assets/fonts/fonts.css';
 import {BaseColors, DerivedColors, themes} from '../src/client/ui/utils/theme';
+import {initialize, mswLoader} from 'msw-storybook-addon';
 
 const options = new Set();
 
@@ -18,6 +22,8 @@ if (typeof Object.values(BaseColors)[0] === 'object' && !Array.isArray(Object.va
 if (typeof Object.values(DerivedColors)[0] === 'object' && !Array.isArray(Object.values(DerivedColors)[0])) {
     Object.keys(DerivedColors).forEach(key => options.add(key));
 }
+
+const cache = createEmotionCache();
 
 /**
  * Loads the motion features.
@@ -32,6 +38,13 @@ const loadMotionFeatures = async (): Promise<FeatureBundle> => {
 
     return module.default;
 };
+
+/*
+ * Initializes MSW
+ * See https://github.com/mswjs/msw-storybook-addon#configuring-msw
+ * to learn how to customize it
+ */
+initialize();
 
 const preview: Preview = {
     argTypes: {
@@ -49,14 +62,25 @@ const preview: Preview = {
             }, [selectedTheme]);
 
             return (
-                <ThemeProvider theme={theme}>
-                    <Global styles={globals} />
-                    <ScreenSizeProvider>
-                        <LazyMotion features={loadMotionFeatures} strict>
-                            <Story />
-                        </LazyMotion>
-                    </ScreenSizeProvider>
-                </ThemeProvider>
+                <CacheProvider value={cache}>
+                    <ThemeProvider theme={theme}>
+                        <Global styles={globals} />
+                        <ScreenSizeProvider>
+                            <LazyMotion features={loadMotionFeatures} strict>
+                                <AnimatePresence>
+                                    <motion.div
+                                        animate="enter"
+                                        exit="exit"
+                                        initial="initial"
+                                        variants={LayoutTransition}
+                                    >
+                                        <Story />
+                                    </motion.div>
+                                </AnimatePresence>
+                            </LazyMotion>
+                        </ScreenSizeProvider>
+                    </ThemeProvider>
+                </CacheProvider>
             );
         }
     ],
@@ -72,6 +96,7 @@ const preview: Preview = {
             }
         }
     },
+    loaders: [mswLoader],
     parameters: {
         actions: { argTypesRegex: "^on[A-Z].*" },
         backgrounds: {
