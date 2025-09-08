@@ -1,5 +1,5 @@
 diff --git a/node_modules/next/dist/build/swc/options.js b/node_modules/next/dist/build/swc/options.js
-index 5c52e6b..0f1bfc5 100644
+index 59fa1c1..0a2a489 100644
 --- a/node_modules/next/dist/build/swc/options.js
 +++ b/node_modules/next/dist/build/swc/options.js
 @@ -57,7 +57,7 @@ function getParserOptions({ filename, jsConfig, ...rest }) {
