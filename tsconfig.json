@@ -46,7 +46,6 @@
     "include": [
         "next-env.d.ts",
         "payload.config.ts",
-        "withMocks.ts",
         "src/**/*.ts",
         "src/**/*.tsx",
         "types/**/*.ts",

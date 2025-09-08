@@ -1,37 +1,22 @@
-import type {StorybookConfig} from "@storybook/nextjs";
+import type {StorybookConfig} from "@storybook/nextjs-vite";
 import {addAliases} from '../withAliases';
-import {addMocks} from '../withMocks';
 
 const config: StorybookConfig = {
-    addons: [
-        "@storybook/addon-links",
-        "@storybook/addon-essentials",
-        "@nfq/storybook-github-issues"
-    ],
+    addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
     core: {
         disableTelemetry: true, // 👈 Disables telemetry
     },
     framework: {
-        name: "@storybook/nextjs",
+        name: "@storybook/nextjs-vite",
         options: {},
     },
-    docs: {
-        autodocs: "tag",
-    },
-    staticDirs: ['../public'],
+    staticDirs: ['../public', './mock'],
     stories: ["../src/client/ui/**/*.mdx", "../src/client/ui/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
     typescript: {
         reactDocgen: "react-docgen-typescript"
     },
-    webpackFinal: async (config) => {
-        if (config.resolve && config.resolve.fallback) {
-            config.resolve.fallback['fs'] = false;
-            config.resolve.fallback['stream'] = false;
-            config.resolve.fallback['zlib'] = false;
-        }
-
+    viteFinal: async (config) => {
         addAliases(config);
-        addMocks(config);
 
         return config;
     }

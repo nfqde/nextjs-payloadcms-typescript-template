@@ -5,7 +5,6 @@ import {defineConfig} from 'cypress';
 import resetDB from './cypress/tasks/resetDB';
 import seedDB from './cypress/tasks/seedDB';
 import {addAliases} from './withAliases';
-import {addMocks} from './withMocks';
 
 const {combinedEnv} = loadEnvConfig(process.cwd());
 
@@ -23,7 +22,6 @@ export default defineConfig({
                 const config = {};
 
                 addAliases(config);
-                addMocks(config);
 
                 return config;
             }
