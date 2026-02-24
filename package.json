@@ -72,7 +72,7 @@
     "next": "15.5.2",
     "next-connect": "^1.0.0",
     "patch-package": "^8.0.0",
-    "payload": "^3.54.0",
+    "payload": "^3.75.0",
     "postinstall-postinstall": "^2.1.0",
     "react": "19.1.1",
     "react-dom": "19.1.1",
