@@ -1,4 +1,4 @@
-/* eslint-disable no-underscore-dangle, no-undef, security/detect-object-injection */
+/* eslint-disable no-underscore-dangle */
 import 'cypress/react';
 import type {ReactElement, ReactNode} from 'react';
 
@@ -89,7 +89,7 @@ Cypress.Commands.add('mountHooks', (...args) => {
     const MockComponent = (
         {children}: {children?(data: ReturnType<typeof args[number]>[]): ReactNode}
     ): ReactElement => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         hookValues.current = args.map(hook => hook());
 
         if (typeof children === 'function') {
@@ -132,11 +132,9 @@ const isHtmlElement = (chai: Chai.ChaiStatic) => {
      */
     function assertHtmlElement(this: Chai.AssertionStatic, tagName: string) {
         this.assert(
-            // eslint-disable-next-line no-underscore-dangle
             (this._obj as HTMLElement[])[0].tagName.toLowerCase() === tagName.toLowerCase(),
             `expected #{this} to be HtmlElement ${tagName.toLowerCase()}`,
             `expected #{this} to not be HtmlElement ${tagName.toLowerCase()}`,
-            // eslint-disable-next-line no-invalid-this, no-underscore-dangle
             this._obj
         );
     }

@@ -33,7 +33,7 @@ describe('useDebounce Hook', () => {
         }).then(() => {
             cy.get('@debouncedFunction').should('not.have.been.called');
 
-            // eslint-disable-next-line promise/no-nesting
+            // eslint-disable-next-line cypress/no-unnecessary-waiting
             cy.wait(timeout).then(() => {
                 cy.get('@debouncedFunction').should('have.been.calledOnce');
             });

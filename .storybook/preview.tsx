@@ -1,20 +1,23 @@
 import React, {useEffect} from 'react';
+
+import {CacheProvider, Global, ThemeProvider} from '@emotion/react';
 import {ScreenSizeProvider} from '@nfq/react-grid';
 import {AnimatePresence, LazyMotion} from 'motion/react';
-import {CacheProvider, Global, ThemeProvider} from '@emotion/react';
 import * as motion from 'motion/react-m';
-import {globals, theme} from '../src/client/ui/utils/globalStyles';
+import {initialize, mswLoader} from 'msw-storybook-addon';
+
+import {createEmotionCache} from '../src/client/application/configs/emotionCache';
 import {LayoutTransition} from '../src/client/ui/animations/layout';
+import {globals, theme} from '../src/client/ui/utils/globalStyles';
+import {BaseColors, DerivedColors, themes} from '../src/client/ui/utils/theme';
 
 import type {Preview} from '@storybook/nextjs-vite';
 import type {FeatureBundle} from 'motion/react';
-import {createEmotionCache} from '../src/client/application/configs/emotionCache';
 
+// eslint-disable-next-line import/extensions
 import '../src/client/ui/assets/fonts/fonts.css';
-import {BaseColors, DerivedColors, themes} from '../src/client/ui/utils/theme';
-import {initialize, mswLoader} from 'msw-storybook-addon';
 
-const options = new Set();
+const options = new Set<string>();
 
 if (typeof Object.values(BaseColors)[0] === 'object' && !Array.isArray(Object.values(BaseColors)[0])) {
     Object.keys(BaseColors).forEach(key => options.add(key));
@@ -48,14 +51,14 @@ initialize();
 
 const preview: Preview = {
     argTypes: {
-        ref: {table: {disable: true}},
-        theme: {table: {disable: true}},
         as: {table: {disable: true}},
-        forwardedAs: {table: {disable: true}}
+        forwardedAs: {table: {disable: true}},
+        ref: {table: {disable: true}},
+        theme: {table: {disable: true}}
     },
     decorators: [
         (Story, context) => {
-            const selectedTheme = context.globals.nfqTheme || 'light';
+            const selectedTheme = context.globals.nfqTheme ?? 'light';
 
             useEffect(() => {
                 document.documentElement.dataset.nfqTheme = selectedTheme;
@@ -86,44 +89,45 @@ const preview: Preview = {
     ],
     globalTypes: {
         nfqTheme: {
-            description: 'Global theme for components',
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             defaultValue: themes ?? 'light',
+            description: 'Global theme for components',
             toolbar: {
-                title: 'Theme',
+                dynamicTitle: true,
                 icon: 'circlehollow',
                 items: Array.from(options),
-                dynamicTitle: true
+                title: 'Theme'
             }
         }
     },
     loaders: [mswLoader],
     parameters: {
-        actions: { argTypesRegex: "^on[A-Z].*" },
+        actions: {argTypesRegex: '^on[A-Z].*'},
         backgrounds: {
             default: 'None',
             values: [
                 {
                     name: 'None',
-                    value: 'transparent',
+                    value: 'transparent'
                 },
                 {
                     name: 'Dark',
-                    value: '#000066',
+                    value: '#000066'
                 },
                 {
                     name: 'Light',
-                    value: '#F3F5F6',
+                    value: '#F3F5F6'
                 },
                 {
                     name: 'White',
-                    value: '#FFFFFF',
+                    value: '#FFFFFF'
                 }
             ]
         },
         controls: {
             matchers: {
-                color: /(background|color)$/i,
-                date: /Date$/,
+                color: /(background|color)$/iu,
+                date: /Date$/u
             },
             sort: 'requiredFirst'
         }

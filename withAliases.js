@@ -31,6 +31,10 @@ const aliases = [
         path: './src/client/payload/'
     },
     {
+        alias: 'GlobalShared',
+        path: './src/shared/'
+    },
+    {
         alias: 'ApiRoutes',
         path: './src/pages/api/'
     },

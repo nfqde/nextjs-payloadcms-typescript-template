@@ -1,9 +1,4 @@
-import React, {useEffect, useRef} from 'react';
-
-import {reportAccessibility} from 'UI/utils/axeCore';
-
-// eslint-disable-next-line no-undef
-let timer: NodeJS.Timeout;
+import {useAxeCoreHelper} from 'UI/utils/AxeCoreHelper/useAxeCoreHelper';
 
 /**
  * The `AxeCoreHelper` component is a functional component designed to observe mutations on the `body` of the document and report accessibility issues using the Axe-Core library.
@@ -18,27 +13,7 @@ let timer: NodeJS.Timeout;
  * ```
  */
 const AxeCoreHelper = () => {
-    const observer = useRef(new MutationObserver(() => {
-        clearTimeout(timer);
-        timer = setTimeout(async () => {
-            // eslint-disable-next-line @nfq/no-magic-numbers
-            await reportAccessibility(React);
-        }, 1000);
-    }));
-
-    useEffect(() => {
-        void reportAccessibility(React);
-
-        const currentObserver = observer.current;
-
-        currentObserver.observe(document.body, {
-            attributes: true,
-            childList: true,
-            subtree: true
-        });
-
-        return () => currentObserver.disconnect();
-    }, []);
+    useAxeCoreHelper();
 
     return null;
 };

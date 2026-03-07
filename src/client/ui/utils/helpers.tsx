@@ -17,6 +17,6 @@ import ReactDOMServer from 'react-dom/server';
  * ```
  */
 export const iconAsBackground = (Icon: ComponentType, props: object): string => `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
-    // eslint-disable-next-line react/jsx-filename-extension, react/jsx-props-no-spreading
+    // eslint-disable-next-line react/jsx-props-no-spreading
     ReactDOMServer.renderToStaticMarkup(<Icon {...props} />)
 )}`;

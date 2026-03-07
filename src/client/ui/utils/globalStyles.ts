@@ -27,11 +27,11 @@ export const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as const;
 export const {configType, globalCss: globalGridCss} = createConfig(breakpoints, {
     baseSpacing: 0.4,
     container: {
-        lg: 'fluid',
-        md: 'fluid',
-        sm: 'fluid',
-        xl: 1140,
         xs: 'fluid',
+        sm: 'fluid',
+        md: 'fluid',
+        lg: 'fluid',
+        xl: 1140,
         xxl: 1140
     }
 });

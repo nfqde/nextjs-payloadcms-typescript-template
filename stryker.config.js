@@ -1,5 +1,3 @@
-/* eslint-disable node/prefer-promises/fs, security/detect-non-literal-fs-filename, promise/prefer-await-to-callbacks */
-// @ts-check
 const fs = require('fs');
 
 /**
@@ -8,6 +6,7 @@ const fs = require('fs');
  * @returns {string[]} The paths to the files.
  */
 const getPaths = () => {
+    // eslint-disable-next-line n/no-sync
     const files = fs.readdirSync('./cypress/component', {
         recursive: true,
         withFileTypes: true

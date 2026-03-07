@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-filename-extension */
 import type {ReactNode} from 'react';
 import {Component} from 'react';
 
@@ -36,7 +35,7 @@ import 'Fonts/fonts';
  */
 const AxeCoreHelper = dynamic(async () => import(
     /* webpackChunkName: "axeCoreHelper" */
-    'UI/utils/AxeCoreHelper'
+    'UI/utils/AxeCoreHelper/AxeCoreHelper'
 ), {ssr: false});
 
 /**
@@ -70,6 +69,8 @@ const clientSideEmotionCache = createEmotionCache();
  * This class is crucial for managing the overall appearance and behavior of the application and for wrapping the application with necessary context providers.
  */
 class App extends Component<AppProps<object> & {emotionCache?: EmotionCache}> {
+    static displayName = 'App';
+
     /**
      * `getLayoutKey` is a method designed to retrieve the layout key from the PageComponent.
      * It is responsible for determining which layout should be used when rendering the application.

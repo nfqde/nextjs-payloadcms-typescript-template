@@ -19,7 +19,7 @@ const ColorGrid = () => {
             <Grid>
                 {baseNames.map((name, index) => (
                     <ColorDisplay key={name}>
-                        {/* eslint-disable-next-line security/detect-object-injection */}
+                        { }
                         <Color $color={baseValues[index]} />
                         <Text>{name}</Text>
                     </ColorDisplay>
@@ -28,6 +28,11 @@ const ColorGrid = () => {
         </>
     );
 };
+
+const Headline = styled.h1`
+    font-family: ${({theme}) => theme.fonts.Lato};
+    font-size: 2.2rem;
+`;
 
 const Grid = styled.div`
     align-items: stretch;
@@ -52,11 +57,6 @@ const Color = styled.div<{$color: string}>`
     aspect-ratio: 1 / 1;
     background-color: ${({$color}) => $color};
     width: 100%;
-`;
-
-const Headline = styled.h1`
-    font-family: ${({theme}) => theme.fonts.Lato};
-    font-size: 2.2rem;
 `;
 
 const Text = styled.span`
