@@ -15,28 +15,26 @@ declare global {
              * @example cy.getCy('greeting')
              */
             getCy(value: string): Chainable<JQuery>;
-
             /**
              * Custom command to mount hooks for testing.
              *
              * @example cy.mountHook(useHook);
              */
             mountHook<T extends (...args: any) => any>(hook: T):
-                Chainable<{
-                    MockComponent(props: {children?(data: ReturnType<T>): ReactNode}): ReactElement;
-                    values: {current: ReturnType<T> | null};
-                }>;
-
+            Chainable<{
+                MockComponent(props: {children?(data: ReturnType<T>): ReactNode}): ReactElement;
+                values: {current: ReturnType<T> | null};
+            }>;
             /**
              * Custom command to mount hooks for testing.
              *
              * @example cy.mountHook(useHook);
              */
             mountHooks<T extends Fn<any, any>[]>(...args: T):
-                Chainable<{
-                    MockComponent(props: {children?(data: ReturnType<T[number]>[]): ReactNode}): ReactElement;
-                    values: {current: ReturnType<T[number]>[] | null};
-                }>;
+            Chainable<{
+                MockComponent(props: {children?(data: ReturnType<T[number]>[]): ReactNode}): ReactElement;
+                values: {current: ReturnType<T[number]>[] | null};
+            }>;
         }
 
         interface Chainer<Subject> extends ColorChainers<Subject> {
