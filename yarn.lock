@@ -2367,6 +2367,11 @@
   resolved "https://registry.yarnpkg.com/@nfq/next-fonts/-/next-fonts-1.7.1.tgz#1fd451be6d83f77541b8f4204a7da10b37a5208f"
   integrity sha512-gWFuZZsOxCxctdJ0zzYnkJ59+mZbo1c86y1jyYGI3mWJXDUkpr2ERMzpGrepgibBaUHgxYCyhKzzVajIpAtqcQ==
 
+"@nfq/react-form@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@nfq/react-form/-/react-form-1.2.1.tgz#4788d720f46af78e40f0b5a5119e8bfef9ebc1d1"
+  integrity sha512-E//iDwjbqOIcaycpYZZoSkyMMrynBZ6XXG34mAuQsTUiyJ+YvkelVo3rVh7ZpdZlaJC4dNUNlQ8zoIyhGSypEg==
+
 "@nfq/react-grid@^7.0.1":
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/@nfq/react-grid/-/react-grid-7.0.1.tgz#723da1f76ba505960c6d849aacd3247aecf8b3f3"
