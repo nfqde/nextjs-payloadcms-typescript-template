@@ -18,7 +18,6 @@ import type {NextApiRequest, NextApiResponse} from 'next';
  */
 const nextConnect = () => {
     const router = createRouter<NextApiRequest, NextApiResponse>();
-    console.log('test');
 
     return router.use(demoMiddleware);
 };
