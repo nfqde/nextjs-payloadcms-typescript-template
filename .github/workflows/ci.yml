@@ -1,0 +1,213 @@
+name: CI
+
+on: [pull_request]
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      eslint: ${{ steps.filter.outputs.eslint }}
+      typescript: ${{ steps.filter.outputs.typescript }}
+      cypress: ${{ steps.filter.outputs.cypress }}
+      horusec: ${{ steps.filter.outputs.horusec }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            eslint:
+              - 'src/**'
+              - 'eslint.config.mjs'
+              - 'package.json'
+              - 'yarn.lock'
+            typescript:
+              - 'src/**'
+              - 'types/**'
+              - 'tsconfig.json'
+              - 'package.json'
+              - 'yarn.lock'
+            cypress:
+              - 'src/**'
+              - 'cypress/**'
+              - 'cypress.config.ts'
+              - 'package.json'
+              - 'yarn.lock'
+            horusec:
+              - 'src/**'
+              - 'package.json'
+              - 'yarn.lock'
+              - 'horusec-config.json'
+
+  setup:
+    needs: detect-changes
+    if: >-
+      needs.detect-changes.outputs.eslint == 'true' ||
+      needs.detect-changes.outputs.typescript == 'true' ||
+      needs.detect-changes.outputs.cypress == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Node.JS 24.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.x"
+
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.OS }}-deps-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-deps-
+
+      - name: Set Tokens
+        run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM }} && npm config set @gsap:registry https://npm.greensock.com/ && npm config set //npm.greensock.com/:_authToken ${{ secrets.GSAP }}
+        env:
+          CI: TRUE
+
+      - name: Install Yarn
+        run: sudo npm -g i yarn
+        env:
+          CI: TRUE
+
+      - name: Install Node Dependencies
+        run: yarn --ignore-engines
+        env:
+          CI: TRUE
+
+  eslint:
+    needs: [detect-changes, setup]
+    if: needs.detect-changes.outputs.eslint == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Node.JS 24.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.x"
+
+      - name: Restore node modules cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.OS }}-deps-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-deps-
+
+      - name: Install Yarn
+        run: sudo npm -g i yarn
+        env:
+          CI: TRUE
+
+      - name: Test Code Linting
+        run: yarn run lint
+
+      - name: Save Code Linting Report JSON
+        run: yarn run lint:report
+        continue-on-error: true
+
+      - name: Annotate Code Linting Results
+        uses: ataylorme/eslint-annotate-action@2.2.0
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          report-json: "eslint_report.json"
+
+      - name: Upload ESLint report
+        uses: actions/upload-artifact@v4
+        with:
+          name: eslint_report.json
+          path: eslint_report.json
+
+  typescript:
+    needs: [detect-changes, setup]
+    if: needs.detect-changes.outputs.typescript == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Node.JS 24.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.x"
+
+      - name: Restore node modules cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.OS }}-deps-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-deps-
+
+      - name: Install Yarn
+        run: sudo npm -g i yarn
+        env:
+          CI: TRUE
+
+      - name: Test Typescript types
+        run: yarn check:types
+
+  cypress:
+    needs: [detect-changes, setup]
+    if: needs.detect-changes.outputs.cypress == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Node.JS 24.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.x"
+
+      - name: Restore node modules cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.OS }}-deps-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-deps-
+
+      - name: Cypress.io
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          config-file: cypress.config.ts
+          component: true
+          browser: electron
+          headed: false
+        env:
+          NODE_ENV: test
+
+      - name: Merge Cypress Reports
+        run: npx mochawesome-merge ./cypress/reports/mocha*.json > ./cypress/reports/index.json
+
+      - name: Cypress report action
+        uses: dmitry/cypress-report-action@v1
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          pathname: cypress/reports/index.json
+
+  horusec:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.horusec == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Running Horusec Security
+        env:
+          HORUSEC_CLI_HORUSEC_API_URI: ${{ secrets.HORUSEC_API }}
+          HORUSEC_CLI_REPOSITORY_AUTHORIZATION: ${{ secrets.HORUSEC_TOKEN }}
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/ZupIT/horusec/main/deployments/scripts/install.sh | bash -s latest-beta
+          horusec start -p="./" -e="true"
