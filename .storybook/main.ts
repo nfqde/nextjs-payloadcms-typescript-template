@@ -3,7 +3,7 @@ import {addAliases} from '../withAliases';
 import type {StorybookConfig} from '@storybook/nextjs-vite';
 
 const config: StorybookConfig = {
-    addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
+    addons: ['@storybook/addon-links', '@storybook/addon-docs'],
     core: {disableTelemetry: true},
     framework: {
         name: '@storybook/nextjs-vite',
