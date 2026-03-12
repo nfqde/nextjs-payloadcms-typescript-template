@@ -134,9 +134,9 @@ const withAliases = nextConfig => ({
 /**
  * Plugin for cors.
  *
- * @param {Parameters<NonNullable<import('@storybook/nextjs').StorybookConfig['webpackFinal']>>[0] | import('webpack').Configuration} config The next config.
+ * @param {Parameters<NonNullable<import('@storybook/nextjs-vite').StorybookConfig['viteFinal']>>[0] | import('webpack').Configuration} config The next config.
  *
- * @returns {Parameters<NonNullable<import('@storybook/nextjs').StorybookConfig['webpackFinal']>>[0] | import('webpack').Configuration} The next config.
+ * @returns {Parameters<NonNullable<import('@storybook/nextjs-vite').StorybookConfig['viteFinal']>>[0] | import('webpack').Configuration} The next config.
  */
 const addAliases = config => {
     if (!config.resolve) {
