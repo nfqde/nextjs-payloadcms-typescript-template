@@ -14,8 +14,7 @@ import {BaseColors, DerivedColors, themes} from '../src/client/ui/utils/theme';
 import type {Preview} from '@storybook/nextjs-vite';
 import type {FeatureBundle} from 'motion/react';
 
-// eslint-disable-next-line import/extensions
-import '../src/client/ui/assets/fonts/fonts.css';
+import 'Fonts/fonts';
 
 const options = new Set<string>();
 
