@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "baseUrl": "./",
         "target": "ES2017",
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
@@ -38,7 +37,8 @@
             "Utils/*": ["./src/server/utils/*"],
             "Tests/*": ["./cypress/*"],
             "@payload-config": ["./src/server/payload/payload.config.ts"],
-            "@app/features": ["./features.dev.js"]
+            "@app/features": ["./features.dev.js"],
+            "types/*": ["./types/*"]
         },
         "allowArbitraryExtensions": true,
         "types": ["node", "cypress", "cypress-real-events", "@nfq/colors/cypress"],
@@ -59,6 +59,7 @@
         "src/**/*.ts",
         "src/**/*.tsx",
         "types/**/*.ts",
+        "types/**/*.d.ts",
         "cypress.config.ts",
         "cypress/support/index.d.ts",
         "cypress/**/*.ts",

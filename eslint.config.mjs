@@ -8,18 +8,22 @@ import {withAliasesEslint} from './withAliases.js';
 
 const featureFlags = createFeatureFlags(['@app/features', '@nfq/feature-flags/jsx']);
 
-export default defineConfig([{
-    extends: [NFQEslintConfig],
-    ignores: [
-        'src/app/(payload)/admin/importMap.js',
-        'next-env.d.ts',
-        'coverage/**',
-        '.nyc_output/**',
-        '.history/**',
-        'public/mockServiceWorker.js',
-        '.storybook/mock/mockServiceWorker.js',
-        'next.config.js'
-    ],
-    rules: {...featureFlags.rules},
-    settings: {'import/resolver': withAliasesEslint()}
-}]);
+export default defineConfig([
+    {
+        ignores: [
+            'src/app/(payload)/**',
+            'next-env.d.ts',
+            'coverage/**',
+            '.nyc_output/**',
+            '.history/**',
+            'public/mockServiceWorker.js',
+            '.storybook/mock/mockServiceWorker.js',
+            'next.config.js'
+        ]
+    },
+    {
+        extends: [NFQEslintConfig],
+        rules: {...featureFlags.rules},
+        settings: {'import/resolver': withAliasesEslint()}
+    }
+]);

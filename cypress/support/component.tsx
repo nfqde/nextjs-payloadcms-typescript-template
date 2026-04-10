@@ -1,4 +1,4 @@
-import '../../src/client/ui/assets/fonts/fonts';
+import 'Fonts/fonts';
 
 // ***********************************************************
 // This example support/component.ts is processed and
