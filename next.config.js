@@ -16,7 +16,6 @@ const withCors = require('./withCors');
 /** @type {import('next').NextConfig} */
 const nextConfig = phase => ({
     compiler: {emotion: {autoLabel: 'never'}},
-    eslint: {ignoreDuringBuilds: true},
     experimental: {
         swcPlugins: [
             [

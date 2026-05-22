@@ -18,7 +18,7 @@ import type {AdminUser} from 'types/payload-types';
  * }
  * ```
  */
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const {pathname} = request.nextUrl;
     const isIFrame = request.headers.get('sec-fetch-dest') === 'iframe';
 
