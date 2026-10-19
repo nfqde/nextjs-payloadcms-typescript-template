@@ -4,7 +4,7 @@ import {CacheProvider, Global, ThemeProvider} from '@emotion/react';
 import {ScreenSizeProvider} from '@nfq/react-grid';
 import {AnimatePresence, LazyMotion} from 'motion/react';
 import * as motion from 'motion/react-m';
-import {initialize, mswLoader} from 'msw-storybook-addon';
+import {mswLoader} from 'msw-storybook-addon/csf3';
 
 import {createEmotionCache} from '../src/client/application/configs/emotionCache';
 import {LayoutTransition} from '../src/client/ui/animations/layout';
@@ -40,13 +40,6 @@ const loadMotionFeatures = async (): Promise<FeatureBundle> => {
 
     return module.default;
 };
-
-/*
- * Initializes MSW
- * See https://github.com/mswjs/msw-storybook-addon#configuring-msw
- * to learn how to customize it
- */
-initialize();
 
 const preview: Preview = {
     argTypes: {
@@ -99,7 +92,7 @@ const preview: Preview = {
             }
         }
     },
-    loaders: [mswLoader],
+    loaders: [mswLoader()],
     parameters: {
         actions: {argTypesRegex: '^on[A-Z].*'},
         backgrounds: {

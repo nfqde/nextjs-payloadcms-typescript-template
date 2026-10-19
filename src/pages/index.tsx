@@ -2,6 +2,8 @@
 import styled from '@emotion/styled';
 import {Container} from '@nfq/react-grid';
 
+import {AppLayout} from 'UI/layouts/AppLayout';
+
 import type {GetStaticProps} from 'next';
 import type {NextSSGPageWithLayout} from 'types/global';
 
@@ -12,27 +14,31 @@ import type {NextSSGPageWithLayout} from 'types/global';
  * @returns A ReactNode representing the `Home` page.
  */
 const Home: NextSSGPageWithLayout<typeof getStaticProps> = () => (
-    <Container as="main">
+    <Container>
         <P>Homepage</P>
     </Container>
 );
 
 /**
- * `getLayout` is a static property of the `Home` component that is a function designed to wrap the component with a specified layout.
+ * `getLayout` is a static property of the `HomePage` component that is a function designed to wrap the component with a specified layout.
  * It receives the router object, page properties, and the PageComponent and returns the PageComponent wrapped with the necessary layout and properties.
  * This property is essential for applying consistent layouts across different pages in the application.
  *
- * @param router        The Next.js router object representing the current route of the application.
+ * @param route         The base path of current route.
  * @param pageProps     The page properties object representing the properties of the current page.
  * @param PageComponent The PageComponent representing the current page.
  * @returns A ReactNode representing the PageComponent wrapped with the necessary layout and properties.
  *
  * @example
  * ```tsx
- * const LayoutWrappedComponent = Home.getLayout(router, pageProps, PageComponent);
+ * const LayoutWrappedComponent = HomePage.getLayout(router, pageProps, PageComponent);
  * ```
  */
-Home.getLayout = (router, pageProps, PageComponent) => <PageComponent router={router} {...pageProps} />;
+Home.getLayout = (route, pageProps, PageComponent) => (
+    <AppLayout route={route} title="Home">
+        <PageComponent {...pageProps} />
+    </AppLayout>
+);
 
 /**
  * `getLayoutKey` is a static property of the `Home` component that is a function designed to return the layout key string.
@@ -46,7 +52,7 @@ Home.getLayout = (router, pageProps, PageComponent) => <PageComponent router={ro
  * const layoutKey = Home.getLayoutKey();
  * ```
  */
-Home.getLayoutKey = () => '';
+Home.getLayoutKey = () => 'AppLayout';
 
 export default Home;
 

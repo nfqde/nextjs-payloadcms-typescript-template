@@ -132,7 +132,7 @@ const withAliases = nextConfig => ({
 });
 
 /**
- * Plugin for cors.
+ * Plugin for aliases.
  *
  * @param {Parameters<NonNullable<import('@storybook/nextjs-vite').StorybookConfig['viteFinal']>>[0] | import('webpack').Configuration} config The next config.
  *
