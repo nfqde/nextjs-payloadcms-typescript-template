@@ -1,0 +1,1 @@
+export const transient = {shouldForwardProp: (prop: string) => !prop.startsWith('$') && prop !== 'as'};

@@ -1,6 +1,5 @@
 import {NFQEslintConfig} from '@nfq/eslint-config';
-// eslint-disable-next-line import/extensions
-import createFeatureFlags from '@nfq/feature-flags/eslint/import.js';
+import createFeatureFlags from '@nfq/feature-flags/eslint';
 import {defineConfig} from 'eslint/config';
 
 // eslint-disable-next-line import/extensions

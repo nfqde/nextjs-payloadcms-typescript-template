@@ -8,7 +8,6 @@ import type {BaseColorsType, shadows, themeColors, themes} from 'UI/utils/theme'
 
 import type {FontList} from '@nfq/next-fonts';
 
-// and extend them!
 declare module '@emotion/react' {
     export interface Theme {
         boxShadows: typeof shadows;
