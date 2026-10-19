@@ -103,9 +103,10 @@ class App extends Component<AppProps<object> & {emotionCache?: EmotionCache}> {
      */
     chooseLayout(): ReactNode {
         const {Component: PageComponent, pageProps, router} = this.props;
+        const route = router.asPath.split('?')[0].split('#')[0];
 
         if (PageComponent.getLayout) {
-            return PageComponent.getLayout(router, pageProps, PageComponent);
+            return PageComponent.getLayout(route, pageProps, PageComponent);
         }
 
         // eslint-disable-next-line react/jsx-props-no-spreading

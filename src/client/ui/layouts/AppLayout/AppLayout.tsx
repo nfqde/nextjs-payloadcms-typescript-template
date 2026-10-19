@@ -72,4 +72,4 @@ const Wrapper = styled.div`
     scrollbar-gutter: stable;
 `;
 
-const Content = motion.main;
+const Content = styled(motion.main)``;
