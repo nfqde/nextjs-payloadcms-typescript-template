@@ -101,7 +101,7 @@ const extensions = [
 ];
 
 /**
- * Plugin for cors.
+ * Plugin for aliases.
  *
  * @param {import('next').NextConfig} nextConfig The next config.
  *
