@@ -1,7 +1,34 @@
 /* eslint-disable no-console */
 import {HTTP_STATUS} from '@nfq/typed-next-api';
 
+import type {ApiError} from 'Errors/ApiError';
 import type {NextApiRequest, NextApiResponse} from 'next';
+
+/**
+ * Type guard function to determine if a given error is an instance of `ApiError`.
+ * This function checks whether the passed error object contains a `statusCode` property,
+ * which is a distinguishing feature of the `ApiError` class. It enables safe type narrowing,
+ * allowing TypeScript to treat the error as an `ApiError` within conditional branches.
+ * This is particularly useful in error handling blocks where you want to provide custom logic
+ * for known error types while still supporting fallback behavior for generic errors.
+ *
+ * @param error The unknown error value to check.
+ * @returns A boolean indicating whether the error is an `ApiError` instance.
+ *
+ * @example
+ * ```tsx
+ * try {
+ *   await fetchUser();
+ * } catch (error) {
+ *   if (isApiError(error)) {
+ *     console.error('API Error:', error.statusCode, error.message);
+ *   } else {
+ *     console.error('Unknown error:', error);
+ *   }
+ * }
+ * ```
+ */
+const isApiError = (error: unknown): error is ApiError => 'statusCode' in (error as any);
 
 /**
  * `errorHandler` is a robust function designed to handle errors occurring during the processing of API requests.
@@ -18,12 +45,19 @@ import type {NextApiRequest, NextApiResponse} from 'next';
  * ```
  */
 export const errorHandler = (err: unknown, req: NextApiRequest, res: NextApiResponse): void => {
-    console.log(err);
+    console.log('Error in API route:', err);
 
-    const {message = 'Unknown error'} = err as Error;
+    if (isApiError(err)) {
+        res.status(err.statusCode).json({
+            message: err.message,
+            statusCode: err.statusCode
+        });
+
+        return;
+    }
 
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
-        message,
+        message: 'Internal server error',
         statusCode: HTTP_STATUS.INTERNAL_SERVER_ERROR
     });
 };
